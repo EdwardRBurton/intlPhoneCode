@@ -1,12 +1,12 @@
 //Author: Ed Burton
-//Company: Dematic
-//Version: 4.0
-//Date:10.01.2022
-//Live on Dematic.com
+//Company: Dematic/Kion Group
+//Version: 2.0
+//Date:09.16.2022
 
-//adding syles to dom
+//injecting syles to head of document
 function appendStyle(styles) {
   //build the style node
+  console.log("appendStyle is called");
   var css = document.createElement("style");
   css.type = "text/css";
 
@@ -47,22 +47,37 @@ if (!document.getElementById("id2")) {
 //Check if form is there, if it is, check for phone field and run intlphone code.
 //Check if sales field is there, then run mktoPersonInterest.
 var checkMKTOForm = function () {
+  console.log("checkMKTOform is called");
+  /*all issues are in this function--when checkMKTOform is called, the form is not loaded. 
+  Need to find a way to wait until form is called, then check for form fields and values
+  function is being called just when form exists. 
+  logic it wrong and "do nothing else statement is being called"
+  need to use formExists htmlCollection to check for the proper fields
+  call the next correct function based on values
+  */
   var formExists = document.getElementsByTagName("form");
   var salesFieldExists = document.querySelector("#mktoPersonInterest");
   var phoneFieldExists = document.querySelector("#Phone");
   if (formExists !== null && salesFieldExists !== null) {
     //call mktoPersonInterest if fied is present
+    console.log("checkMKTOform is called, and says call mktoPersonInterest");
     mktoPersonInterest();
   } else if (phoneFieldExists !== null) {
     //call intlMKTOPhone function
+    console.log("checkMKTOform is called, and says call intlMKTOPhone");
     intlMKTOPhone();
   } else {
     //do nothing
+    console.log("checkMKTOform is called, and says do nothing");
+    console.log("formExists:" + formExists); //expecting this to be null
+    console.log(formExists);
+    console.log("phoneFieldExists:" + phoneFieldExists); //expecting this to be null
   }
 };
 
 //function to check if mktoPersonInterest value is I want to speak to a salesperson
 var mktoPersonInterest = function () {
+  console.log("mktoPersonInterest is called");
   var select = document.getElementById("mktoPersonInterest"); //focus on the select field
   //var options = select.options; //get the options from the field
   var salesSelect = document.querySelector("#mktoPersonInterest");
@@ -85,6 +100,7 @@ var mktoPersonInterest = function () {
 
 //intlMKTOPhone function expression to call when MKTO form with phone field is loaded
 var intlMKTOPhone = function () {
+  console.log("intlMKTOPhone is called");
   const phoneInputField = document.querySelector("#Phone");
   const countryData = window.intlTelInputGlobals.getCountryData();
   const countryInputField = document.querySelector("#Country");
@@ -112,7 +128,7 @@ var intlMKTOPhone = function () {
     optionNode.appendChild(textNode);
     countryInputField.appendChild(optionNode);
   }
-  // set country field initial value
+  // set it's initial value
   countryInputField.value = phoneInput.getSelectedCountryData().iso2;
   // removed per Doug and Malika for edge case of Germans carrying a French mobile number
   // listen to the telephone input for changes
@@ -173,18 +189,14 @@ var intlMKTOPhone = function () {
   }
   //closing bracket
 };
-//function to init code
+//function to inti code
 function initIntlPhone() {
   mktoPersonInterest();
 }
-//load code when
-
-window.addEventListener("load", () => {
-  checkMKTOForm();
-  console.log("checkMKTOForm fucking works!");
-});
+//Add code on page load
+//window.addEventListener("load", checkMKTOForm, appendStyle(styles));
 
 window.addEventListener("load", () => {
   appendStyle(styles);
-  console.log("appendStyle fucking works!");
+  checkMKTOForm();
 });
