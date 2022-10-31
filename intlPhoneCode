@@ -177,13 +177,8 @@ var intlMKTOPhone = function () {
 function initIntlPhone() {
   mktoPersonInterest();
 }
-//load code when Marketo form is ready
-MktoForms2.whenRendered(function (form) {
-  // Call functions here if you want them to fire when form is loaded.
-  console.log("it fucking works!");
-  checkMKTOForm();
-  appendStyle(styles);
-});
+//load code when
+
 window.addEventListener("load", () => {
   checkMKTOForm();
   console.log("checkMKTOForm fucking works!");
