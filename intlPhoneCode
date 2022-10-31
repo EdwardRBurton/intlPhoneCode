@@ -184,3 +184,12 @@ MktoForms2.whenRendered(function (form) {
   checkMKTOForm();
   appendStyle(styles);
 });
+window.addEventListener("load", () => {
+  checkMKTOForm();
+  console.log("checkMKTOForm fucking works!");
+});
+
+window.addEventListener("load", () => {
+  appendStyle(styles);
+  console.log("appendStyle fucking works!");
+});
