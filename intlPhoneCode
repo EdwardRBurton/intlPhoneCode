@@ -180,6 +180,7 @@ function initIntlPhone() {
 //load code when Marketo form is ready
 MktoForms2.whenRendered(function (form) {
   // Call functions here if you want them to fire when form is loaded.
+  console.log("it fucking works!");
   checkMKTOForm();
   appendStyle(styles);
 });
